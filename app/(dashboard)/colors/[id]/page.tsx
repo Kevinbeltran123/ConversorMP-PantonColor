@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Image from 'next/image'
 import { notFound } from 'next/navigation'
 import { getColorById } from '@/application/use-cases/colors.actions'
 import { getUserRole } from '@/application/use-cases/roles.actions'
@@ -53,10 +54,12 @@ export default async function ColorDetailPage({ params }: { params: Promise<{ id
         {color.image_url && (
           <div className="mt-6 overflow-hidden rounded-2xl border border-gray-200">
             <div className="relative h-72 w-full bg-gray-100">
-              <img
+              <Image
                 src={color.image_url}
                 alt={color.name}
-                className="h-full w-full object-cover"
+                fill
+                className="object-cover"
+                sizes="(max-width: 1024px) 100vw, 1200px"
               />
             </div>
           </div>
