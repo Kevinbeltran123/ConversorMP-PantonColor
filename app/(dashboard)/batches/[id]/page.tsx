@@ -4,7 +4,7 @@ import { getBatchById } from '@/application/use-cases/batches.actions'
 import { PrintButton, BackButton } from '@/components/batches/print-button'
 import { ExportBatchButton } from '@/components/batches/export-batch-button'
 import { formatGrams } from '@/lib/utils/units'
-import { formatQuantity, formatRoundingDifference, getRoundingStatusColor } from '@/lib/utils/scaling'
+import { formatQuantity } from '@/lib/utils/scaling'
 
 export default async function BatchDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params
@@ -18,9 +18,7 @@ export default async function BatchDetailPage({ params }: { params: Promise<{ id
   const color = formula.color
   const product = color.product
 
-  // Calculate rounding difference
   const totalScaled = batch.items.reduce((sum, item) => sum + item.quantity_g, 0)
-  const roundingDiff = batch.target_total_g - totalScaled
 
   return (
     <div className="space-y-6">
@@ -39,7 +37,7 @@ export default async function BatchDetailPage({ params }: { params: Promise<{ id
         <div className="flex gap-3">
           <BackButton />
           <ExportBatchButton batch={batch} />
-          <PrintButton />
+          <PrintButton batchId={batch.id} />
         </div>
       </div>
 
@@ -131,22 +129,6 @@ export default async function BatchDetailPage({ params }: { params: Promise<{ id
               </tr>
             </tbody>
           </table>
-        </div>
-
-        {/* Rounding Difference */}
-        <div className="mt-4 rounded-md bg-blue-50 p-4">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm font-medium text-gray-900">Diferencia por Redondeo</p>
-              <p className="mt-1 text-xs text-gray-600">
-                Diferencia entre el objetivo ({formatGrams(batch.target_total_g)}) y el total
-                escalado ({formatQuantity(totalScaled)})
-              </p>
-            </div>
-            <p className={`text-2xl font-bold ${getRoundingStatusColor(roundingDiff, batch.target_total_g)}`}>
-              {formatRoundingDifference(roundingDiff)}
-            </p>
-          </div>
         </div>
       </div>
 

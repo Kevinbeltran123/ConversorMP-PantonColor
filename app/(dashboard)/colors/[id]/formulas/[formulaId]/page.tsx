@@ -3,7 +3,7 @@ import { notFound } from 'next/navigation'
 import { getFormulaById } from '@/application/use-cases/formulas.actions'
 import { ExportFormulaButton } from '@/components/formulas/export-formula-button'
 import { formatGrams } from '@/lib/utils/units'
-import { SimpleBatchCalculator } from '@/components/batches/simple-batch-calculator'
+import { Button } from '@/components/ui/button'
 
 export default async function FormulaDetailPage({
   params,
@@ -21,82 +21,99 @@ export default async function FormulaDetailPage({
   const product = color.product
 
   return (
-    <div>
-      {/* Header */}
-      <div className="flex items-center justify-between">
-        <div>
-          <Link
-            href={`/colors/${colorId}`}
-            className="text-sm text-gray-500 hover:text-gray-700"
-          >
-            ← Volver a {color.name}
-          </Link>
-          <h1 className="mt-2 text-3xl font-bold text-gray-900">
-            Fórmula Versión {formula.version}
-          </h1>
-          <p className="mt-1 text-gray-600">
-            {product.name} - {color.name}
-          </p>
+    <div className="space-y-8">
+      <section className="rounded-2xl border border-gray-200 bg-white p-7 shadow-[0_12px_30px_rgba(0,0,0,0.06)]">
+        <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
+          <div>
+            <Link
+              href={`/colors/${colorId}`}
+              className="inline-flex items-center rounded-lg border border-red-100 bg-red-50 px-4 py-2 text-base font-semibold text-red-700 transition-colors hover:bg-red-100 hover:text-red-800"
+            >
+              ← Volver a {color.name}
+            </Link>
+            <p className="mt-5 text-lg font-semibold tracking-wide text-red-600">
+              Fórmula
+            </p>
+            <h1 className="mt-1 text-4xl font-semibold text-gray-950">
+              Versión {formula.version}
+            </h1>
+            <p className="mt-1 text-sm text-gray-600">
+              {product.name} - {color.name}
+            </p>
+          </div>
+
+          <div className="flex w-full flex-col gap-3 sm:w-auto sm:flex-row sm:items-center">
+            <ExportFormulaButton
+              formula={{
+                ...formula,
+                product,
+                color,
+              }}
+            />
+            <Link
+              href={`/batches/new?formulaId=${formulaId}`}
+              className="w-full sm:w-auto"
+            >
+              <Button className="w-full px-4 py-2 text-base font-semibold sm:w-auto">
+                Generar Lote
+              </Button>
+            </Link>
+          </div>
         </div>
-        <div className="flex gap-3">
-          <ExportFormulaButton
-            formula={{
-              ...formula,
-              product: product,
-              color: color,
-            }}
-          />
-          {formula.is_active && (
-            <span className="inline-flex items-center rounded-full bg-green-100 px-3 py-1 text-sm font-medium text-green-800">
-              Activa
-            </span>
-          )}
-        </div>
-      </div>
+      </section>
 
       {/* Formula Info */}
-      <div className="mt-6 grid grid-cols-2 gap-4 rounded-lg bg-white p-6 shadow">
-        <div>
-          <p className="text-sm font-medium text-gray-700">Cantidad Base</p>
-          <p className="mt-1 text-2xl font-semibold text-gray-900">
+      <section className="grid grid-cols-1 gap-4 md:grid-cols-3">
+        <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-[0_10px_24px_rgba(0,0,0,0.06)]">
+          <p className="text-sm font-medium text-gray-500">Cantidad base</p>
+          <p className="mt-2 text-3xl font-semibold text-gray-950">
             {formatGrams(formula.base_total_g)}
           </p>
         </div>
-        <div>
-          <p className="text-sm font-medium text-gray-700">Ingredientes</p>
-          <p className="mt-1 text-2xl font-semibold text-gray-900">{formula.items.length}</p>
+        <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-[0_10px_24px_rgba(0,0,0,0.06)]">
+          <p className="text-sm font-medium text-gray-500">Ingredientes</p>
+          <p className="mt-2 text-3xl font-semibold text-gray-950">{formula.items.length}</p>
         </div>
-        <div className="col-span-2">
-          <p className="text-sm font-medium text-gray-700">Fecha de Creación</p>
-          <p className="mt-1 text-sm text-gray-900">
+        <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-[0_10px_24px_rgba(0,0,0,0.06)]">
+          <p className="text-sm font-medium text-gray-500">Fecha de creación</p>
+          <p className="mt-2 text-sm font-medium text-gray-900">
             {new Date(formula.created_at).toLocaleString('es-MX')}
           </p>
         </div>
+
         {formula.notes && (
-          <div className="col-span-2">
-            <p className="text-sm font-medium text-gray-700">Notas</p>
-            <p className="mt-1 text-sm text-gray-600">{formula.notes}</p>
+          <div className="md:col-span-3 rounded-2xl border border-gray-200 bg-white p-6 shadow-[0_10px_24px_rgba(0,0,0,0.06)]">
+            <p className="text-sm font-medium text-gray-500">Notas</p>
+            <p className="mt-2 text-sm leading-6 text-gray-700">{formula.notes}</p>
           </div>
         )}
-      </div>
+      </section>
 
       {/* Ingredients Table */}
-      <div className="mt-8">
-        <h2 className="text-xl font-semibold text-gray-900">Ingredientes</h2>
-        <div className="mt-4 overflow-hidden rounded-lg border border-gray-200 shadow">
+      <section className="space-y-4">
+        <div className="flex items-end justify-between">
+          <div>
+            <h2 className="text-3xl font-semibold text-gray-950">Ingredientes</h2>
+            <p className="mt-1 text-sm text-gray-600">
+              Orden sugerido para preparar la mezcla.
+            </p>
+          </div>
+          <p className="text-sm font-medium text-gray-600">{formula.items.length} en total</p>
+        </div>
+        <div className="overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-[0_10px_24px_rgba(0,0,0,0.06)]">
           <table className="min-w-full divide-y divide-gray-200">
             <thead className="bg-gray-50">
               <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
+                <th className="px-6 py-3 text-left text-sm font-semibold uppercase tracking-wider text-gray-600">
                   #
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
+                <th className="px-6 py-3 text-left text-sm font-semibold uppercase tracking-wider text-gray-600">
                   Ingrediente
                 </th>
-                <th className="px-6 py-3 text-right text-xs font-medium uppercase tracking-wider text-gray-500">
+                <th className="px-6 py-3 text-right text-sm font-semibold uppercase tracking-wider text-gray-600">
                   Cantidad
                 </th>
-                <th className="px-6 py-3 text-right text-xs font-medium uppercase tracking-wider text-gray-500">
+                <th className="px-6 py-3 text-right text-sm font-semibold uppercase tracking-wider text-gray-600">
                   % del Total
                 </th>
               </tr>
@@ -138,13 +155,7 @@ export default async function FormulaDetailPage({
             </tbody>
           </table>
         </div>
-      </div>
-
-      {/* Batch Calculator */}
-      <div className="mt-8">
-        <h2 className="text-xl font-semibold text-gray-900">Generar Lote</h2>
-        <SimpleBatchCalculator formulaId={formulaId} colorId={colorId} />
-      </div>
+      </section>
     </div>
   )
 }

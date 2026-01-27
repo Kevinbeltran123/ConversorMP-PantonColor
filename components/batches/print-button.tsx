@@ -1,27 +1,39 @@
-"use client";
+'use client'
 
-import { useRouter } from "next/navigation";
+import { useRouter } from 'next/navigation'
 
-export function PrintButton() {
+interface PrintButtonProps {
+  batchId?: string
+}
+
+export function PrintButton({ batchId }: PrintButtonProps) {
+  const router = useRouter()
+
   return (
     <button
-      onClick={() => window.print()}
-      className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-semibold"
+      onClick={() => {
+        if (!batchId) {
+          router.back()
+          return
+        }
+        router.push(`/batches/${batchId}/print`)
+      }}
+      className="rounded-lg bg-red-600 px-4 py-2 text-base font-semibold text-white transition-colors hover:bg-red-700"
     >
       🖨️ Imprimir
     </button>
-  );
+  )
 }
 
 export function BackButton() {
-  const router = useRouter();
+  const router = useRouter()
 
   return (
     <button
       onClick={() => router.back()}
-      className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50"
+      className="rounded-lg border border-gray-300 px-4 py-2 text-base font-semibold text-gray-700 transition-colors hover:bg-gray-50"
     >
       Volver
     </button>
-  );
+  )
 }

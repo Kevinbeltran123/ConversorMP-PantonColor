@@ -140,11 +140,14 @@ export function FormulaForm({ colorId, initialIngredients }: FormulaFormProps) {
                 <input
                   type="number"
                   value={item.quantity_g || ''}
-                  onChange={(e) => updateItem(item.temp_id, 'quantity_g', parseInt(e.target.value) || 0)}
+                  onChange={(e) =>
+                    updateItem(item.temp_id, 'quantity_g', parseFloat(e.target.value) || 0)
+                  }
                   placeholder="Cantidad (g)"
                   className="w-32 rounded-md border border-gray-300 px-3 py-2"
                   required
-                  min="1"
+                  min="0.01"
+                  step="0.01"
                 />
                 <Button
                   type="button"

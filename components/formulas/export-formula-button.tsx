@@ -14,7 +14,11 @@ export function ExportFormulaButton({ formula }: ExportFormulaButtonProps) {
   }
 
   return (
-    <Button variant="secondary" onClick={handleExport}>
+    <Button
+      variant="secondary"
+      onClick={handleExport}
+      className="px-4 py-2 text-base font-semibold"
+    >
       📊 Exportar CSV
     </Button>
   )
