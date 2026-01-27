@@ -25,8 +25,11 @@ export default async function BatchPrintPage({
   const totalScaled = batch.items.reduce((sum, item) => sum + item.quantity_g, 0)
 
   const printFormula = {
-    ...formula,
-    product: formula.color.product,
+    id: formula.id,
+    version: formula.version,
+    base_total_g: formula.base_total_g,
+    is_active: formula.is_active,
+    notes: formula.notes,
     color: formula.color,
   }
 

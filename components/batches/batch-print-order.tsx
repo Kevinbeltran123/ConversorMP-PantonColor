@@ -1,7 +1,16 @@
 'use client'
 
 import { formatQuantity } from '@/lib/utils/scaling'
-import type { FormulaWithDetails } from '@/application/dtos/formula.dto'
+import type { Product, Color } from '@/domain/entities/database.types'
+
+interface PrintFormula {
+  id: string
+  version: number
+  base_total_g: number
+  is_active: boolean
+  notes: string | null
+  color: Color & { product: Product }
+}
 
 interface PrintCalculation {
   scaleFactor: number;
@@ -17,7 +26,7 @@ interface PrintCalculation {
 }
 
 interface BatchPrintOrderProps {
-  formula: FormulaWithDetails
+  formula: PrintFormula
   calculation: PrintCalculation
   batchId?: string
   observations?: string
