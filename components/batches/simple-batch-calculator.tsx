@@ -9,7 +9,6 @@ import type { BatchCalculationResult } from '@/application/dtos/batch.dto'
 import {
   formatRoundingDifference,
   getRoundingStatusColor,
-  isRoundingAcceptable,
   formatQuantity,
 } from '@/lib/utils/scaling'
 
@@ -210,14 +209,6 @@ export function SimpleBatchCalculator({ formulaId, colorId }: SimpleBatchCalcula
                   >
                     {formatRoundingDifference(calculation.rounding_difference_g)}
                   </p>
-                  {!isRoundingAcceptable(
-                    calculation.rounding_difference_g,
-                    calculation.target_total_g
-                  ) && (
-                    <p className="mt-1 text-xs font-medium text-red-600">
-                      ⚠️ Diferencia mayor al 1%
-                    </p>
-                  )}
                 </div>
               </div>
             </div>

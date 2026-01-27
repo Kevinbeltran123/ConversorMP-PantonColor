@@ -34,6 +34,7 @@ export interface Color {
   product_id: string
   name: string
   notes: string | null
+  image_url: string | null
   active: boolean
   created_at: string
   updated_at: string

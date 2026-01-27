@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Image from 'next/image'
 import { getColors } from '@/application/use-cases/colors.actions'
 import { Button } from '@/components/ui/button'
 import { getUserRole } from '@/application/use-cases/roles.actions'
@@ -48,28 +49,41 @@ export default async function ColorsPage({
               <Link
                 key={color.id}
                 href={`/colors/${color.id}`}
-                className="block rounded-lg bg-white p-6 shadow transition-shadow hover:shadow-md"
+                className="block overflow-hidden rounded-lg bg-white shadow transition-shadow hover:shadow-md"
               >
-                <div className="flex items-start justify-between">
-                  <div>
-                    <h3 className="text-lg font-semibold text-gray-900">{color.name}</h3>
-                    <p className="mt-1 text-sm text-gray-500">
-                      {Array.isArray(color.product) ? color.product[0]?.name : color.product?.name}
-                    </p>
+                {color.image_url && (
+                  <div className="relative h-48 w-full bg-gray-100">
+                    <Image
+                      src={color.image_url}
+                      alt={color.name}
+                      fill
+                      className="object-cover"
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                    />
                   </div>
-                  {color.active ? (
-                    <span className="inline-flex rounded-full bg-green-100 px-2 py-1 text-xs font-medium text-green-800">
-                      Activo
-                    </span>
-                  ) : (
-                    <span className="inline-flex rounded-full bg-gray-100 px-2 py-1 text-xs font-medium text-gray-800">
-                      Inactivo
-                    </span>
+                )}
+                <div className="p-6">
+                  <div className="flex items-start justify-between">
+                    <div className="flex-1">
+                      <h3 className="text-lg font-semibold text-gray-900">{color.name}</h3>
+                      <p className="mt-1 text-sm text-gray-500">
+                        {Array.isArray(color.product) ? color.product[0]?.name : color.product?.name}
+                      </p>
+                    </div>
+                    {color.active ? (
+                      <span className="inline-flex rounded-full bg-green-100 px-2 py-1 text-xs font-medium text-green-800">
+                        Activo
+                      </span>
+                    ) : (
+                      <span className="inline-flex rounded-full bg-gray-100 px-2 py-1 text-xs font-medium text-gray-800">
+                        Inactivo
+                      </span>
+                    )}
+                  </div>
+                  {color.notes && (
+                    <p className="mt-2 line-clamp-2 text-sm text-gray-600">{color.notes}</p>
                   )}
                 </div>
-                {color.notes && (
-                  <p className="mt-2 line-clamp-2 text-sm text-gray-600">{color.notes}</p>
-                )}
               </Link>
             ))}
           </div>

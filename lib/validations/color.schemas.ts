@@ -12,6 +12,7 @@ export const createColorSchema = z.object({
     .max(100, 'El nombre no puede exceder 100 caracteres')
     .trim(),
   notes: z.string().max(1000, 'Las notas no pueden exceder 1000 caracteres').optional(),
+  image_url: z.string().url('URL de imagen inválida').optional().nullable(),
   active: z.boolean().default(true),
 })
 

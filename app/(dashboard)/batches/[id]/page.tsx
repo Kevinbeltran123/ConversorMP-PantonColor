@@ -134,22 +134,20 @@ export default async function BatchDetailPage({ params }: { params: Promise<{ id
         </div>
 
         {/* Rounding Difference */}
-        {Math.abs(roundingDiff) > 0.01 && (
-          <div className="mt-4 rounded-md bg-blue-50 p-4">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm font-medium text-gray-900">Diferencia por Redondeo</p>
-                <p className="mt-1 text-xs text-gray-600">
-                  Diferencia entre el objetivo ({formatGrams(batch.target_total_g)}) y el total
-                  escalado ({formatQuantity(totalScaled)})
-                </p>
-              </div>
-              <p className={`text-2xl font-bold ${getRoundingStatusColor(roundingDiff, batch.target_total_g)}`}>
-                {formatRoundingDifference(roundingDiff)}
+        <div className="mt-4 rounded-md bg-blue-50 p-4">
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-sm font-medium text-gray-900">Diferencia por Redondeo</p>
+              <p className="mt-1 text-xs text-gray-600">
+                Diferencia entre el objetivo ({formatGrams(batch.target_total_g)}) y el total
+                escalado ({formatQuantity(totalScaled)})
               </p>
             </div>
+            <p className={`text-2xl font-bold ${getRoundingStatusColor(roundingDiff, batch.target_total_g)}`}>
+              {formatRoundingDifference(roundingDiff)}
+            </p>
           </div>
-        )}
+        </div>
       </div>
 
       {/* Link back to color */}

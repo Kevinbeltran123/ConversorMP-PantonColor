@@ -10,7 +10,6 @@ import type { FormulaWithColor } from '@/application/dtos/formula.dto'
 import {
   formatRoundingDifference,
   getRoundingStatusColor,
-  isRoundingAcceptable,
   formatQuantity,
 } from '@/lib/utils/scaling'
 
@@ -305,11 +304,6 @@ export function BatchCalculator({ formulas }: BatchCalculatorProps) {
                   <p className={`text-2xl font-bold ${getRoundingStatusColor(calculation.rounding_difference_g, calculation.target_total_g)}`}>
                     {formatRoundingDifference(calculation.rounding_difference_g)}
                   </p>
-                  {!isRoundingAcceptable(calculation.rounding_difference_g, calculation.target_total_g) && (
-                    <p className="mt-1 text-xs font-medium text-red-600">
-                      ⚠️ Diferencia mayor al 1%
-                    </p>
-                  )}
                 </div>
               </div>
             </div>
