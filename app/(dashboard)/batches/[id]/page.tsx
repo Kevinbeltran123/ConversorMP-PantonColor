@@ -14,9 +14,9 @@ export default async function BatchDetailPage({ params }: { params: Promise<{ id
     notFound()
   }
 
-  const formula = batch.formula
-  const color = formula.color
-  const product = color.product
+  const formulaData = Array.isArray(batch.formula) ? batch.formula[0] : batch.formula
+  const colorData = Array.isArray(formulaData?.color) ? formulaData?.color?.[0] : formulaData?.color
+  const product = colorData?.product
 
   const totalScaled = batch.items.reduce((sum, item) => sum + item.quantity_g, 0)
 
@@ -29,7 +29,7 @@ export default async function BatchDetailPage({ params }: { params: Promise<{ id
             Lote #{batch.id.slice(0, 8)}
           </h1>
           <p className="mt-1 text-sm text-gray-600 sm:text-base">
-            {product.name} - {color.name}
+            {product?.name ?? '—'} - {colorData?.name ?? '—'}
           </p>
           <p className="mt-1 text-xs text-gray-500 sm:text-sm">
             Creado el {new Date(batch.created_at).toLocaleString('es-MX')}
@@ -47,25 +47,29 @@ export default async function BatchDetailPage({ params }: { params: Promise<{ id
       <div className="grid grid-cols-1 gap-3 rounded-lg bg-white p-4 shadow sm:gap-4 sm:p-6 md:grid-cols-3">
         <div>
           <p className="text-xs font-medium text-gray-700 sm:text-sm">Producto</p>
-          <p className="mt-1 text-base font-semibold text-gray-900 sm:text-lg">{product.name}</p>
+          <p className="mt-1 text-base font-semibold text-gray-900 sm:text-lg">
+            {product?.name ?? '—'}
+          </p>
         </div>
         <div>
           <p className="text-xs font-medium text-gray-700 sm:text-sm">Color</p>
-          <p className="mt-1 text-base font-semibold text-gray-900 sm:text-lg">{color.name}</p>
+          <p className="mt-1 text-base font-semibold text-gray-900 sm:text-lg">
+            {colorData?.name ?? '—'}
+          </p>
         </div>
         <div>
           <p className="text-xs font-medium text-gray-700 sm:text-sm">Fórmula</p>
           <Link
-            href={`/colors/${color.id}/formulas/${formula.id}`}
+            href={`/colors/${colorData?.id ?? ''}/formulas/${formulaData?.id ?? ''}`}
             className="mt-1 inline-block text-base font-semibold text-blue-600 hover:text-blue-800 sm:text-lg"
           >
-            Versión {formula.version}
+            Versión {formulaData?.version ?? '—'}
           </Link>
         </div>
         <div>
           <p className="text-xs font-medium text-gray-700 sm:text-sm">Cantidad Base</p>
           <p className="mt-1 text-base font-semibold text-gray-900 sm:text-lg">
-            {formatGrams(formula.base_total_g)}
+            {formulaData ? formatGrams(formulaData.base_total_g) : '—'}
           </p>
         </div>
         <div>
@@ -141,10 +145,10 @@ export default async function BatchDetailPage({ params }: { params: Promise<{ id
       {/* Link back to color */}
       <div className="text-center">
         <Link
-          href={`/colors/${color.id}`}
+          href={`/colors/${colorData?.id ?? ''}`}
           className="text-sm text-blue-600 hover:text-blue-800"
         >
-          ← Volver a {color.name}
+          ← Volver a {colorData?.name ?? 'color'}
         </Link>
       </div>
     </div>

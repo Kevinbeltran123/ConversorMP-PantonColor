@@ -21,16 +21,47 @@ export default async function BatchPrintPage({
     data: { user },
   } = await supabase.auth.getUser()
 
-  const formula = batch.formula
+  const formulaData = Array.isArray(batch.formula) ? batch.formula[0] : batch.formula
+  const colorData = Array.isArray(formulaData?.color) ? formulaData?.color?.[0] : formulaData?.color
+  const productData = Array.isArray(colorData?.product) ? colorData?.product?.[0] : colorData?.product
   const totalScaled = batch.items.reduce((sum, item) => sum + item.quantity_g, 0)
 
+  const fallbackProduct = {
+    id: '',
+    name: '',
+    description: null,
+    active: true,
+    created_at: '',
+    updated_at: '',
+    created_by: null,
+    updated_by: null,
+  }
+
+  const fallbackColor = {
+    id: '',
+    product_id: '',
+    name: '',
+    notes: null,
+    image_url: null,
+    active: true,
+    created_at: '',
+    updated_at: '',
+    created_by: null,
+    updated_by: null,
+    product: fallbackProduct,
+  }
+
+  const normalizedColor = colorData
+    ? { ...colorData, product: productData ?? fallbackProduct }
+    : fallbackColor
+
   const printFormula = {
-    id: formula.id,
-    version: formula.version,
-    base_total_g: formula.base_total_g,
-    is_active: formula.is_active,
-    notes: formula.notes,
-    color: formula.color,
+    id: formulaData?.id ?? '',
+    version: formulaData?.version ?? 0,
+    base_total_g: formulaData?.base_total_g ?? 0,
+    is_active: formulaData?.is_active ?? false,
+    notes: formulaData?.notes ?? null,
+    color: normalizedColor,
   }
 
   const printCalculation = {
