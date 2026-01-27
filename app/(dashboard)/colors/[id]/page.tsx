@@ -25,11 +25,18 @@ export default async function ColorDetailPage({ params }: { params: Promise<{ id
           <h1 className="text-3xl font-bold text-gray-900">{color.name}</h1>
           <p className="mt-2 text-gray-600">{product?.name}</p>
         </div>
-        {isAdmin && (
-          <Link href={`/colors/${id}/formulas/new`}>
-            <Button>Crear Fórmula</Button>
-          </Link>
-        )}
+        <div className="flex gap-3">
+          {formulas.length >= 2 && (
+            <Link href={`/colors/${id}/compare`}>
+              <Button variant="secondary">Comparar Versiones</Button>
+            </Link>
+          )}
+          {isAdmin && (
+            <Link href={`/colors/${id}/formulas/new`}>
+              <Button>Crear Fórmula</Button>
+            </Link>
+          )}
+        </div>
       </div>
 
       {color.notes && (
@@ -55,7 +62,7 @@ export default async function ColorDetailPage({ params }: { params: Promise<{ id
             {formulas.map((formula) => (
               <Link
                 key={formula.id}
-                href={`/formulas/${formula.id}`}
+                href={`/colors/${id}/formulas/${formula.id}`}
                 className="block rounded-lg bg-white p-6 shadow transition-shadow hover:shadow-md"
               >
                 <div className="flex items-start justify-between">

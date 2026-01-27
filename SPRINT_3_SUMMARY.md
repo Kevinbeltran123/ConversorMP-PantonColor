@@ -181,6 +181,28 @@ components/
 ✅ **Sprint 2:** CRUD Colores + Crear Fórmula (Completado)
 ✅ **Sprint 3:** Escalado + Guardar Lote + Tests (Completado)
 
+## Mejora: Precisión Decimal
+
+### Problema Identificado
+Con cantidades enteras (INTEGER), ingredientes pequeños perdían precisión al escalar:
+- Ejemplo: 1g × 0.125 = 0.125g → se redondeaba a 0g (pérdida total)
+
+### Solución Implementada
+Se migró el sistema a usar cantidades decimales (DECIMAL(10,2)) con precisión hasta centésimas de gramo:
+- **Base de Datos:** Migración `20260126_change_to_decimals.sql`
+- **Validaciones:** Actualizadas para permitir hasta 2 decimales
+- **Cálculos:** Redondeo a 2 decimales en lugar de enteros
+- **UI:** Inputs con `step="0.01"` y formato con `formatQuantity()`
+
+### Beneficios
+- ✅ Precisión de 0.01g (10 miligramos)
+- ✅ Ingredientes pequeños no se pierden al escalar
+- ✅ Compatible con datos existentes
+- ✅ Mejora significativa en exactitud de cálculos
+
+### Documentación
+Ver [DECIMAL_MIGRATION.md](DECIMAL_MIGRATION.md) para detalles completos.
+
 ## Próximos Pasos Sugeridos
 - Sprint 4: Impresión de etiquetas/recetas
 - Sprint 5: Reportes y analytics

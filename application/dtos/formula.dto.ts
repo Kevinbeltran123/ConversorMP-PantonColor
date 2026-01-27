@@ -22,6 +22,12 @@ export interface FormulaWithColor extends FormulaWithItems {
   color: Color & { product: Product }
 }
 
+export interface FormulaWithDetails extends Formula {
+  color: Color
+  product: Product
+  items: FormulaItemWithIngredient[]
+}
+
 export interface FormulaListItem {
   id: string
   color_name: string

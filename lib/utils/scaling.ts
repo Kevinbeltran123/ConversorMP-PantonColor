@@ -25,11 +25,11 @@ export function calculateScaleFactor(baseAmount: number, targetAmount: number): 
  * Scale a single ingredient quantity
  * @param originalQuantity - Original quantity in grams
  * @param scaleFactor - Scale factor to apply
- * @returns Scaled quantity rounded to nearest integer
+ * @returns Scaled quantity rounded to 2 decimal places
  */
 export function scaleQuantity(originalQuantity: number, scaleFactor: number): number {
   const scaled = originalQuantity * scaleFactor
-  return Math.round(scaled)
+  return Math.round(scaled * 100) / 100
 }
 
 /**
@@ -142,4 +142,15 @@ export function getRoundingStatusColor(difference: number, targetAmount: number)
   if (isRoundingAcceptable(difference, targetAmount, 0.5)) return 'text-green-600'
   if (isRoundingAcceptable(difference, targetAmount, 1)) return 'text-yellow-600'
   return 'text-red-600'
+}
+
+/**
+ * Format quantity for display (shows up to 2 decimals, removes trailing zeros)
+ * @param quantity - Quantity in grams
+ * @returns Formatted string with 'g' suffix
+ */
+export function formatQuantity(quantity: number): string {
+  // Round to 2 decimals and remove trailing zeros
+  const rounded = Math.round(quantity * 100) / 100
+  return `${rounded.toLocaleString('es-MX', { minimumFractionDigits: 0, maximumFractionDigits: 2 })}g`
 }

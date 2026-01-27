@@ -7,8 +7,6 @@ import { logout } from '@/application/use-cases/auth.actions'
 const navigation = [
   { name: 'Dashboard', href: '/dashboard' },
   { name: 'Colores', href: '/colors' },
-  { name: 'Fórmulas', href: '/formulas' },
-  { name: 'Lotes', href: '/batches' },
 ]
 
 // Agregar Debug solo en desarrollo

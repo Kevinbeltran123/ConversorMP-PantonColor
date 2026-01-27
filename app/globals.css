@@ -1,3 +1,91 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Print Styles for Batch Orders */
+@media print {
+  /* Hide navigation and UI elements */
+  nav,
+  .sidebar,
+  .no-print,
+  button:not(.print-preserve) {
+    display: none !important;
+  }
+
+  /* Optimize page for printing */
+  body {
+    margin: 0;
+    padding: 0;
+    background: white;
+  }
+
+  /* Ensure print container uses full page */
+  .print-container {
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    padding: 1cm;
+    page-break-after: avoid;
+  }
+
+  /* Typography adjustments */
+  body {
+    font-size: 12pt;
+    color: black;
+  }
+
+  h1 {
+    font-size: 24pt;
+  }
+
+  h2 {
+    font-size: 18pt;
+  }
+
+  h3 {
+    font-size: 14pt;
+  }
+
+  /* Table improvements */
+  table {
+    page-break-inside: avoid;
+    border-collapse: collapse;
+  }
+
+  tr {
+    page-break-inside: avoid;
+    page-break-after: auto;
+  }
+
+  /* Remove background colors (some printers ignore them) */
+  * {
+    background: transparent !important;
+  }
+
+  /* Preserve essential backgrounds */
+  .print-bg-preserve {
+    background: #f3f4f6 !important;
+  }
+
+  /* Ensure borders are visible */
+  table,
+  th,
+  td {
+    border: 1px solid #000 !important;
+  }
+
+  /* Page breaks */
+  .page-break {
+    page-break-before: always;
+  }
+
+  .no-page-break {
+    page-break-inside: avoid;
+  }
+
+  /* A4 specific */
+  @page {
+    size: A4;
+    margin: 1cm;
+  }
+}

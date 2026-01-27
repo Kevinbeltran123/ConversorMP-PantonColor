@@ -49,24 +49,32 @@ describe('Scaling Calculations', () => {
   })
 
   describe('scaleQuantity', () => {
-    it('should scale quantity and round to nearest integer', () => {
+    it('should scale quantity and preserve decimals (2 places)', () => {
       expect(scaleQuantity(100, 2.5)).toBe(250)
+      expect(scaleQuantity(100, 0.125)).toBe(12.5)
+      expect(scaleQuantity(1.5, 10)).toBe(15)
     })
 
-    it('should round down when decimal is less than 0.5', () => {
-      expect(scaleQuantity(100, 1.004)).toBe(100) // 100.4 rounds to 100
+    it('should round to 2 decimal places', () => {
+      expect(scaleQuantity(100, 1.004)).toBe(100.4)
+      expect(scaleQuantity(100, 1.006)).toBe(100.6)
+      expect(scaleQuantity(100, 0.01234)).toBe(1.23) // 1.234 rounds to 1.23
     })
 
-    it('should round up when decimal is greater than 0.5', () => {
-      expect(scaleQuantity(100, 1.006)).toBe(101) // 100.6 rounds to 101
+    it('should handle very small quantities', () => {
+      expect(scaleQuantity(0.5, 0.1)).toBe(0.05)
+      expect(scaleQuantity(1, 0.01)).toBe(0.01)
+      expect(scaleQuantity(2.5, 0.1)).toBe(0.25)
     })
 
     it('should handle scaling down', () => {
       expect(scaleQuantity(1000, 0.1)).toBe(100)
+      expect(scaleQuantity(1000, 0.05)).toBe(50)
     })
 
     it('should handle scale factor of 1', () => {
       expect(scaleQuantity(500, 1)).toBe(500)
+      expect(scaleQuantity(1.25, 1)).toBe(1.25)
     })
   })
 

@@ -8,8 +8,11 @@ export const formulaItemSchema = z.object({
   ingredient_id: z.string().uuid('ID de ingrediente inválido'),
   quantity_g: z
     .number()
-    .int('La cantidad debe ser un número entero')
-    .positive('La cantidad debe ser mayor a 0'),
+    .positive('La cantidad debe ser mayor a 0')
+    .refine(
+      (val) => Number(val.toFixed(2)) === val || val.toFixed(2).split('.')[1]?.length <= 2,
+      { message: 'La cantidad no puede tener más de 2 decimales' }
+    ),
   position: z.number().int().default(0),
 })
 
@@ -17,8 +20,11 @@ export const createFormulaSchema = z.object({
   color_id: z.string().uuid('ID de color inválido'),
   base_total_g: z
     .number()
-    .int('La cantidad base debe ser un número entero')
-    .positive('La cantidad base debe ser mayor a 0'),
+    .positive('La cantidad base debe ser mayor a 0')
+    .refine(
+      (val) => Number(val.toFixed(2)) === val || val.toFixed(2).split('.')[1]?.length <= 2,
+      { message: 'La cantidad base no puede tener más de 2 decimales' }
+    ),
   is_active: z.boolean().default(true),
   notes: z.string().max(1000, 'Las notas no pueden exceder 1000 caracteres').optional(),
   items: z
