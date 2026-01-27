@@ -5,7 +5,7 @@ export default async function HomePage() {
   const user = await getUser()
 
   if (user) {
-    redirect('/dashboard')
+    redirect('/colors')
   } else {
     redirect('/login')
   }

@@ -47,7 +47,7 @@ export async function updateSession(request: NextRequest) {
   // Redirigir a dashboard si ya está autenticado
   if (user && request.nextUrl.pathname === '/login') {
     const url = request.nextUrl.clone()
-    url.pathname = '/dashboard'
+    url.pathname = '/colors'
     return NextResponse.redirect(url)
   }
 
