@@ -4,9 +4,11 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-100 via-white to-white">
       <header className="border-b border-black/10 bg-gradient-to-r from-black via-gray-900 to-red-700 text-white">
-        <div className="flex w-full items-center justify-between px-8 py-5">
+        <div className="flex w-full flex-col items-start justify-between gap-3 px-4 py-4 sm:flex-row sm:items-center sm:px-6 md:px-8 md:py-5">
           <div>
-            <p className="text-lg font-semibold text-white">Sistema de Fórmulas Panton Color</p>
+            <p className="text-base font-semibold text-white sm:text-lg">
+              Sistema de Fórmulas Panton Color
+            </p>
           </div>
           <form action={logout}>
             <button
@@ -18,7 +20,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           </form>
         </div>
       </header>
-      <main className="px-8 py-10">
+      <main className="px-4 py-6 sm:px-6 md:px-8 md:py-10">
         <div className="w-full max-w-none">{children}</div>
       </main>
     </div>

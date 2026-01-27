@@ -23,8 +23,8 @@ export default async function NewFormulaPage({ params }: { params: Promise<{ id:
   if (!ingredientsResult.data || ingredientsResult.data.length === 0) {
     return (
       <div>
-        <h1 className="text-3xl font-bold text-gray-900">Crear Fórmula</h1>
-        <div className="mt-8 rounded-md bg-yellow-50 p-4">
+        <h1 className="text-2xl font-bold text-gray-900 sm:text-3xl">Crear Fórmula</h1>
+        <div className="mt-6 rounded-md bg-yellow-50 p-4 sm:mt-8">
           <p className="text-sm text-yellow-800">
             No hay ingredientes disponibles. Los seeds deberían haber creado ingredientes iniciales.
             Verifica que ejecutaste las migraciones correctamente.
@@ -40,11 +40,11 @@ export default async function NewFormulaPage({ params }: { params: Promise<{ id:
 
   return (
     <div>
-      <h1 className="text-3xl font-bold text-gray-900">Crear Fórmula</h1>
-      <p className="mt-2 text-gray-600">
+      <h1 className="text-2xl font-bold text-gray-900 sm:text-3xl">Crear Fórmula</h1>
+      <p className="mt-2 text-sm text-gray-600 sm:text-base">
         {colorResult.data.name} - {product?.name}
       </p>
-      <div className="mt-8 rounded-lg bg-white p-6 shadow">
+      <div className="mt-6 rounded-lg bg-white p-4 shadow sm:mt-8 sm:p-6">
         <FormulaForm colorId={id} initialIngredients={ingredientsResult.data} />
       </div>
     </div>

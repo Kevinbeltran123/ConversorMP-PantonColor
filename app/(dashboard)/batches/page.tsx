@@ -7,21 +7,23 @@ export default async function BatchesPage() {
   const { data: batches, error } = await getBatches()
 
   return (
-    <div className="space-y-6">
-      <div className="flex flex-col gap-3">
+    <div className="space-y-4 sm:space-y-6">
+      <div className="flex flex-col gap-2 sm:gap-3">
         <Link
           href="/colors"
-          className="inline-flex w-fit items-center rounded-lg border border-red-100 bg-red-50 px-4 py-2 text-base font-semibold text-red-700 transition-colors hover:bg-red-100 hover:text-red-800"
+          className="inline-flex w-fit items-center rounded-lg border border-red-100 bg-red-50 px-3 py-1.5 text-sm font-semibold text-red-700 transition-colors hover:bg-red-100 hover:text-red-800 sm:px-4 sm:py-2 sm:text-base"
         >
           ← Volver a colores
         </Link>
-        <h1 className="text-4xl font-semibold text-gray-950">Lotes</h1>
-        <p className="text-base text-gray-600">Historial de lotes generados.</p>
+        <h1 className="text-2xl font-semibold text-gray-950 sm:text-3xl lg:text-4xl">Lotes</h1>
+        <p className="text-sm text-gray-600 sm:text-base">Historial de lotes generados.</p>
       </div>
 
       <div className="flex flex-wrap gap-3">
-        <Link href="/batches/new">
-          <Button className="px-4 py-2 text-base font-semibold">Generar Lote</Button>
+        <Link href="/batches/new" className="w-full sm:w-auto">
+          <Button className="w-full px-4 py-2 text-base font-semibold sm:w-auto">
+            Generar Lote
+          </Button>
         </Link>
       </div>
 
@@ -35,26 +37,26 @@ export default async function BatchesPage() {
           </p>
         </div>
       ) : (
-        <div className="overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-[0_10px_24px_rgba(0,0,0,0.06)]">
+        <div className="overflow-x-auto rounded-2xl border border-gray-200 bg-white shadow-[0_10px_24px_rgba(0,0,0,0.06)]">
           <table className="min-w-full divide-y divide-gray-200">
             <thead className="bg-gray-50">
               <tr>
-                <th className="px-6 py-3 text-left text-sm font-semibold uppercase tracking-wider text-gray-600">
+                <th className="px-3 py-2 text-left text-xs font-semibold uppercase tracking-wider text-gray-600 sm:px-6 sm:py-3 sm:text-sm">
                   Lote
                 </th>
-                <th className="px-6 py-3 text-left text-sm font-semibold uppercase tracking-wider text-gray-600">
+                <th className="px-3 py-2 text-left text-xs font-semibold uppercase tracking-wider text-gray-600 sm:px-6 sm:py-3 sm:text-sm">
                   Producto / Color
                 </th>
-                <th className="px-6 py-3 text-right text-sm font-semibold uppercase tracking-wider text-gray-600">
+                <th className="px-3 py-2 text-right text-xs font-semibold uppercase tracking-wider text-gray-600 sm:px-6 sm:py-3 sm:text-sm">
                   Objetivo
                 </th>
-                <th className="px-6 py-3 text-right text-sm font-semibold uppercase tracking-wider text-gray-600">
+                <th className="px-3 py-2 text-right text-xs font-semibold uppercase tracking-wider text-gray-600 sm:px-6 sm:py-3 sm:text-sm">
                   Factor
                 </th>
-                <th className="px-6 py-3 text-left text-sm font-semibold uppercase tracking-wider text-gray-600">
+                <th className="px-3 py-2 text-left text-xs font-semibold uppercase tracking-wider text-gray-600 sm:px-6 sm:py-3 sm:text-sm">
                   Fecha
                 </th>
-                <th className="px-6 py-3 text-right text-sm font-semibold uppercase tracking-wider text-gray-600">
+                <th className="px-3 py-2 text-right text-xs font-semibold uppercase tracking-wider text-gray-600 sm:px-6 sm:py-3 sm:text-sm">
                   Acción
                 </th>
               </tr>
@@ -67,30 +69,33 @@ export default async function BatchesPage() {
 
                 return (
                   <tr key={batch.id}>
-                    <td className="whitespace-nowrap px-6 py-4 text-sm font-semibold text-gray-900">
+                    <td className="whitespace-nowrap px-3 py-3 text-xs font-semibold text-gray-900 sm:px-6 sm:py-4 sm:text-sm">
                       #{batch.id.slice(0, 8)}
                     </td>
-                    <td className="px-6 py-4 text-sm text-gray-700">
+                    <td className="px-3 py-3 text-xs text-gray-700 sm:px-6 sm:py-4 sm:text-sm">
                       <div className="font-semibold text-gray-900">
                         {product} · {color}
                       </div>
-                      <div className="text-xs text-gray-500">
+                      <div className="text-[10px] text-gray-500 sm:text-xs">
                         Fórmula v{batch.formula?.version ?? '—'} · Base{' '}
                         {batch.formula ? formatGrams(batch.formula.base_total_g) : '—'}
                       </div>
                     </td>
-                    <td className="whitespace-nowrap px-6 py-4 text-right text-sm font-semibold text-gray-900">
+                    <td className="whitespace-nowrap px-3 py-3 text-right text-xs font-semibold text-gray-900 sm:px-6 sm:py-4 sm:text-sm">
                       {targetKg}
                     </td>
-                    <td className="whitespace-nowrap px-6 py-4 text-right text-sm text-gray-700">
+                    <td className="whitespace-nowrap px-3 py-3 text-right text-xs text-gray-700 sm:px-6 sm:py-4 sm:text-sm">
                       {batch.scale_factor.toFixed(4)}x
                     </td>
-                    <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-700">
+                    <td className="whitespace-nowrap px-3 py-3 text-xs text-gray-700 sm:px-6 sm:py-4 sm:text-sm">
                       {new Date(batch.created_at).toLocaleString('es-MX')}
                     </td>
-                    <td className="whitespace-nowrap px-6 py-4 text-right">
+                    <td className="whitespace-nowrap px-3 py-3 text-right sm:px-6 sm:py-4">
                       <Link href={`/batches/${batch.id}`}>
-                        <Button variant="secondary" className="px-4 py-2 text-base font-semibold">
+                        <Button
+                          variant="secondary"
+                          className="px-3 py-1.5 text-xs font-semibold sm:px-4 sm:py-2 sm:text-base"
+                        >
                           Ver
                         </Button>
                       </Link>

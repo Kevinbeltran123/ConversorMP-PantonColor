@@ -18,15 +18,15 @@ export default async function DashboardPage() {
 
   return (
     <div>
-      <div className="flex items-center justify-between">
-        <h1 className="text-3xl font-bold text-gray-900">Dashboard</h1>
+      <div className="flex flex-col items-start justify-between gap-3 sm:flex-row sm:items-center">
+        <h1 className="text-2xl font-bold text-gray-900 sm:text-3xl">Dashboard</h1>
         {role && (
           <span className={`rounded-full px-3 py-1 text-sm font-medium ${roleColor}`}>
             {roleName}
           </span>
         )}
       </div>
-      <p className="mt-4 text-gray-600">Bienvenido, {user.email}</p>
+      <p className="mt-4 text-sm text-gray-600 sm:text-base">Bienvenido, {user.email}</p>
 
       {error && (
         <div className="mt-4 rounded-md bg-red-50 p-4 text-sm text-red-800">
