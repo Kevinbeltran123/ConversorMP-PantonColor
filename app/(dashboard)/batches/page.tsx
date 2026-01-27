@@ -63,8 +63,11 @@ export default async function BatchesPage() {
             </thead>
             <tbody className="divide-y divide-gray-200 bg-white">
               {batches.map((batch) => {
-                const product = batch.formula?.color?.product?.name ?? '—'
-                const color = batch.formula?.color?.name ?? '—'
+                const colorData = Array.isArray(batch.formula?.color)
+                  ? batch.formula?.color?.[0]
+                  : batch.formula?.color
+                const product = colorData?.product?.name ?? '—'
+                const color = colorData?.name ?? '—'
                 const targetKg = `${gramsToKg(batch.target_total_g).toFixed(2)} kg`
 
                 return (
@@ -110,4 +113,3 @@ export default async function BatchesPage() {
     </div>
   )
 }
-
