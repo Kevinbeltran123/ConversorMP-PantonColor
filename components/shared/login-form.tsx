@@ -23,8 +23,8 @@ export function LoginForm() {
     <div className="flex min-h-screen items-center justify-center bg-gray-100 px-4">
       <div className="w-full max-w-md space-y-8 rounded-lg bg-white p-6 shadow-lg sm:p-8">
         <div className="text-center">
-          <h2 className="text-2xl font-bold text-gray-900 sm:text-3xl">ConversorMP</h2>
-          <p className="mt-2 text-sm text-gray-600">Sistema Graniplast</p>
+          <h2 className="text-2xl font-bold text-gray-900 sm:text-3xl">Conversor Graniplast</h2>
+          <p className="mt-2 text-sm text-gray-600">Panton Color</p>
         </div>
 
         <form action={handleSubmit} className="mt-8 space-y-6">
